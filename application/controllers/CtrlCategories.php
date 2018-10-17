@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class CtrlCategories extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,6 +20,24 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$data = array();
+		$this->load->view('index',$data);
+
+	}
+
+
+	public function afficherCategories()
+	{
+		$this->load->model('Model_Categories');
+		$data['titre'] = 'lesnouvellescatégories';
+		$data['lesCategs'] = $this->Model_Categories->getAllCategories();
+		$this->load->view('AfficherCategories',$data);
+	}
+	public function afficherOffres($idCateg)
+	{
+		//$idCateg = $_GET['idCateg'];
+		$model = $this->load->model('Model_offre');
+		$data['lesOffres'] = $this->Model_offre->getOffres($idCateg);
+		$this->load->view('AfficherOffre',$data);
 	}
 }
